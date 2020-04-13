@@ -23,7 +23,6 @@ jobs:
 
     - name: Create PDF
       run: | 
-        sudo apt install pandoc texlive
         pandoc --standalone --to pdf -o Ideas.pdf Ideas.md
     
     - name: Upload artifact
