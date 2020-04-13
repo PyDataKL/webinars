@@ -16,12 +16,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    container: docker://pandoc/latex:2.9.2.1
+    
     steps:
     - uses: actions/checkout@v2
 
-    - name: Run Makefile
-      run: pandoc --standalone --to pdf -o Ideas.pdf Ideas.md
+    - name: Create PDF
+      run: | 
+        sudo apt install pandoc texlive
+        pandoc --standalone --to pdf -o Ideas.pdf Ideas.md
     
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
