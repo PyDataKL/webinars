@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: 
+    - master 
+    - release/*
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: docker://pandoc/latex:2.9.2.1
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create PDF
+      run: pandoc --standalone --to pdf --pdf-engine=xelatex -V geometry:a4paper -V linkcolor:blue -f gfm --table-of-contents --number-sections -o Ideas.pdf Ideas.md
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webinars
+        path: .
